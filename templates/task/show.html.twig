@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+    <h1>Task</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ task.id }}</td>
+            </tr>
+            <tr>
+                <th>Start_date</th>
+                <td>{{ task.startDate ? task.startDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Start_time</th>
+                <td>{{ task.startTime ? task.startTime|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ task.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ task.description }}</td>
+            </tr>
+            <tr>
+                <th>Is_hidden</th>
+                <td>{{ task.isHidden ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is_achieved</th>
+                <td>{{ task.isAchieved ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Priority</th>
+                <td>{{ task.priority }}</td>
+            </tr>
+            <tr>
+                <th>Desire</th>
+                <td>{{ task.desire }}</td>
+            </tr>
+            <tr>
+                <th>Concentration</th>
+                <td>{{ task.concentration }}</td>
+            </tr>
+            <tr>
+                <th>Workload</th>
+                <td>{{ task.workload }}</td>
+            </tr>
+            <tr>
+                <th>Desired_deadline</th>
+                <td>{{ task.desiredDeadline }}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_task_index') }}">back to list</a>
+
+    <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
+
+    {{ include('task/_delete_form.html.twig') }}
+{% endblock %}
