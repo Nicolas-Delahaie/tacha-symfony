@@ -16,10 +16,10 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $start_date = null;
+    private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $start_time = null;
+    private ?\DateTimeInterface $startTime = null;
 
     #[ORM\Column(length: 50)]
     private ?string $title = null;
@@ -28,10 +28,10 @@ class Task
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?bool $is_hidden = null;
+    private ?bool $isHidden = null;
 
     #[ORM\Column]
-    private ?bool $is_achieved = null;
+    private ?bool $isAchieved = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 3, nullable: true)]
     private ?string $priority = null;
@@ -55,24 +55,24 @@ class Task
 
     public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
-    public function setStartDate(?\DateTimeInterface $start_date): static
+    public function setStartDate(?\DateTimeInterface $startDate): static
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getStartTime(): ?\DateTimeInterface
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(?\DateTimeInterface $start_time): static
+    public function setStartTime(?\DateTimeInterface $startTime): static
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
@@ -82,7 +82,7 @@ class Task
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setitle(string $title): static
     {
         $this->title = $title;
 
@@ -103,23 +103,23 @@ class Task
 
     public function isHidden(): ?bool
     {
-        return $this->is_hidden;
+        return $this->isHidden;
     }
-    public function setIsHidden(bool $is_hidden): static
+    public function setIsHidden(bool $isHidden): static
     {
-        $this->is_hidden = $is_hidden;
+        $this->isHidden = $isHidden;
 
         return $this;
     }
 
     public function isAchieved(): ?bool
     {
-        return $this->is_achieved;
+        return $this->isAchieved;
     }
 
-    public function setIsAchieved(bool $is_achieved): static
+    public function setIsAchieved(bool $isAchieved): static
     {
-        $this->is_achieved = $is_achieved;
+        $this->isAchieved = $isAchieved;
 
         return $this;
     }
