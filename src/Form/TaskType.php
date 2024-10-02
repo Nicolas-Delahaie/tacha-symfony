@@ -26,7 +26,6 @@ class TaskType extends AbstractType
             ->add('desire')
             ->add('concentration')
             ->add('workload')
-            ->add('desired_deadline')
             ->add('deadline', null, [
                 'widget' => 'single_text',
             ])

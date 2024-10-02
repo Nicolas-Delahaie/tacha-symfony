@@ -19,7 +19,6 @@
                 <th>Desire</th>
                 <th>Concentration</th>
                 <th>Workload</th>
-                <th>Desired_deadline</th>
                 <th>Deadline</th>
                 <th>actions</th>
             </tr>
@@ -38,7 +37,6 @@
                 <td>{{ task.desire }}</td>
                 <td>{{ task.concentration }}</td>
                 <td>{{ task.workload }}</td>
-                <td>{{ task.desiredDeadline }}</td>
                 <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>

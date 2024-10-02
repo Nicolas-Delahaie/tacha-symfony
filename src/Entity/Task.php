@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -43,9 +44,6 @@ class Task
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 3, nullable: true)]
     private ?string $workload = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 3, nullable: true)]
-    private ?string $desired_deadline = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deadline = null;
@@ -107,8 +105,7 @@ class Task
     {
         return $this->is_hidden;
     }
-
-    public function setHidden(bool $is_hidden): static
+    public function setIsHidden(bool $is_hidden): static
     {
         $this->is_hidden = $is_hidden;
 
@@ -120,7 +117,7 @@ class Task
         return $this->is_achieved;
     }
 
-    public function setAchieved(bool $is_achieved): static
+    public function setIsAchieved(bool $is_achieved): static
     {
         $this->is_achieved = $is_achieved;
 
@@ -171,18 +168,6 @@ class Task
     public function setWorkload(?string $workload): static
     {
         $this->workload = $workload;
-
-        return $this;
-    }
-
-    public function getDesiredDeadline(): ?string
-    {
-        return $this->desired_deadline;
-    }
-
-    public function setDesiredDeadline(?string $desired_deadline): static
-    {
-        $this->desired_deadline = $desired_deadline;
 
         return $this;
     }
