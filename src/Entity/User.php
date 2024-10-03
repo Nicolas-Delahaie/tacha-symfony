@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
@@ -21,7 +22,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(options: ["default" => 'CURRENT_TIMESTAMP']) ]
+    #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     /**
@@ -33,13 +34,26 @@ class User
     /**
      * @var Collection<int, Workspace>
      */
-    #[ORM\OneToMany(targetEntity: Workspace::class, mappedBy: 'owner', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Workspace::class, mappedBy: 'owner', orphanRemoval: true, cascade: ['remove'])]
     private Collection $workspaces;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Workspace $defaultWorkspace = null;
+
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
         $this->workspaces = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function persistDefaultValues(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 
     public function getId(): ?int
@@ -139,6 +153,18 @@ class User
                 $workspace->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDefaultWorkspace(): ?Workspace
+    {
+        return $this->defaultWorkspace;
+    }
+
+    public function setDefaultWorkspace(Workspace $defaultWorkspace): static
+    {
+        $this->defaultWorkspace = $defaultWorkspace;
 
         return $this;
     }
