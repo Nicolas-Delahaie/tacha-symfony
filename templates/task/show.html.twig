@@ -12,11 +12,11 @@
                 <td>{{ task.id }}</td>
             </tr>
             <tr>
-                <th>Start_date</th>
+                <th>StartDate</th>
                 <td>{{ task.startDate ? task.startDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Start_time</th>
+                <th>StartTime</th>
                 <td>{{ task.startTime ? task.startTime|date('H:i:s') : '' }}</td>
             </tr>
             <tr>
@@ -28,11 +28,11 @@
                 <td>{{ task.description }}</td>
             </tr>
             <tr>
-                <th>Is_hidden</th>
+                <th>IsHidden</th>
                 <td>{{ task.isHidden ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is_achieved</th>
+                <th>IsAchieved</th>
                 <td>{{ task.isAchieved ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
@@ -54,6 +54,33 @@
             <tr>
                 <th>Deadline</th>
                 <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Father</th>
+                <td>
+                {% if task.father %}
+                    <a href="{{ path('app_task_show', { id: task.father.id }) }}">
+                        {{ task.father.title }}
+                    </a>
+                {% else %}
+                    No father
+                {% endif %}
+
+                </td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>
+                    {% if task.tags is not empty %}
+                        <ul>
+                            {% for tag in task.tags %}
+                                <li>{{ tag.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No tags
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>
