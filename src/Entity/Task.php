@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -48,6 +50,20 @@ class Task
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deadline = null;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childs')]
+    private ?self $father = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'father')]
+    private Collection $childs;
+
+    public function __construct()
+    {
+        $this->childs = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -82,7 +98,7 @@ class Task
         return $this->title;
     }
 
-    public function setitle(string $title): static
+    public function setTitle(string $title): static
     {
         $this->title = $title;
 
@@ -180,6 +196,48 @@ class Task
     public function setDeadline(?\DateTimeInterface $deadline): static
     {
         $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getFather(): ?self
+    {
+        return $this->father;
+    }
+
+    public function setFather(?self $father): static
+    {
+        $this->father = $father;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getChilds(): Collection
+    {
+        return $this->childs;
+    }
+
+    public function addChild(self $child): static
+    {
+        if (!$this->childs->contains($child)) {
+            $this->childs->add($child);
+            $child->setFather($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChild(self $child): static
+    {
+        if ($this->childs->removeElement($child)) {
+            // set the owning side to null (unless already changed)
+            if ($child->getFather() === $this) {
+                $child->setFather(null);
+            }
+        }
 
         return $this;
     }
