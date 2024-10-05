@@ -27,10 +27,6 @@ class Tag
     #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'tags')]
     private Collection $tasks;
 
-    #[ORM\ManyToOne(inversedBy: 'tags')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $creator = null;
-
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -88,18 +84,6 @@ class Tag
         if ($this->tasks->removeElement($task)) {
             $task->removeTag($this);
         }
-
-        return $this;
-    }
-
-    public function getCreator(): ?User
-    {
-        return $this->creator;
-    }
-
-    public function setCreator(?User $creator): static
-    {
-        $this->creator = $creator;
 
         return $this;
     }
