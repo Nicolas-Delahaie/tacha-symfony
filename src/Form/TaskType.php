@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Tag;
 use App\Entity\Task;
+use App\Entity\Workspace;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,7 +42,14 @@ class TaskType extends AbstractType
                 'class' => Tag::class,
                 'choice_label' => 'name',
                 'multiple' => true,
-                'required' => false, // Rendre ce champ facultatif
+                'expanded' => true,
+            ])
+            ->add('workspace', EntityType::class, [
+                'class' => Workspace::class,
+                'choice_label' => function (Workspace $workspace) {
+                    return "Workspace from ".$workspace->getOwner()->getEmail();
+                },
+                'required' => true,
             ])
         ;
     }
