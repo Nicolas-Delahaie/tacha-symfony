@@ -20,6 +20,8 @@
                 <th>Concentration</th>
                 <th>Workload</th>
                 <th>Deadline</th>
+                <th>Father</th>
+                <th>Workspace</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -38,6 +40,24 @@
                 <td>{{ task.concentration }}</td>
                 <td>{{ task.workload }}</td>
                 <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+                <td>
+                    {% if task.father %}
+                        <a href="{{ path('app_task_show', { id: task.father.id }) }}">
+                            {{ task.father.title }}
+                        </a>
+                    {% else %}
+                        No father
+                    {% endif %}
+                </td>
+                <td>
+                    {% if task.workspace %}
+                        <a href="{{ path('app_workspace_show', { id: task.workspace.id }) }}">
+                            {{ task.workspace.name }}
+                        </a>
+                    {% else %}
+                        No father
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('app_task_show', {'id': task.id}) }}">show</a>
                     <a href="{{ path('app_task_edit', {'id': task.id}) }}">edit</a>
