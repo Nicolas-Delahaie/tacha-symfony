@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Workspace;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +31,10 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $workspace = new Workspace();
+            $workspace->setName('Default workspace');
+            $workspace->setOwner($user);
+            $user->setDefaultWorkspace($workspace);
             $entityManager->persist($user);
             $entityManager->flush();
 

@@ -13,11 +13,11 @@ class Workspace
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40, unique: true)]
+    #[ORM\Column(length: 40)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'workspaces')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $owner = null;
 
     public function getId(): ?int

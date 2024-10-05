@@ -37,8 +37,8 @@ class User
     #[ORM\OneToMany(targetEntity: Workspace::class, mappedBy: 'owner', orphanRemoval: true, cascade: ['remove'])]
     private Collection $workspaces;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OneToOne(cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Workspace $defaultWorkspace = null;
 
 
