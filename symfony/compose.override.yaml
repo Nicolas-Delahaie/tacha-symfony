@@ -1,11 +1,10 @@
+# Doit avoir le cli
+name: tacha-symfony-dev
 services:
-  ###> doctrine/doctrine-bundle ###
-  mysql:
-    ports:
-      - "${DATABASE_PORT}:3306"
-  ###< doctrine/doctrine-bundle ###
+  www:
+    volumes:
+      - ./:/var/www
 
-  ###> symfony/mailer ###
   mailer:
     image: axllent/mailpit
     ports:
@@ -14,4 +13,3 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
-###< symfony/mailer ###
