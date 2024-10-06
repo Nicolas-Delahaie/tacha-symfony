@@ -1,8 +1,9 @@
-version: "3.8"
+version: "0.0"
+name: tacha-symfony
 services:
-  # Mysql database container
   db:
     image: mysql
+    container_name: tacha-symfony-db
     restart: always
     volumes:
       - db-data:/var/lib/mysql
