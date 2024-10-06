@@ -47,3 +47,17 @@ Je pense que ce projet n'a pas d'avenir face à la concurrence.
 Je continuerai peut-être pour mon apprentissage de Symfony et du framework qui l'accompagnera.
 
 J'aimerais avoir cet outils, façonné à mon image, et propre à mes besoins pour mon quotidien.
+
+## Utilisation
+
+### Production
+
+docker-compose -f compose.yaml -f compose.prod.yaml up --build
+
+### Developpement
+Création du fichier .env (copie du example)
+Completion du fichier
+`docker-compose up -d`
+Permet de lancer la base de données avec PhpMyAdmin.
+`php bin/console doctrine:schema:create`
+`php bin/console server:start`

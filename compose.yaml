@@ -1,7 +1,6 @@
 version: "0.0"
 
 services:
-  ###> doctrine/doctrine-bundle ###
   mysql:
     image: mysql:${SERVER_VERSION}
     environment:
@@ -14,8 +13,7 @@ services:
       start_period: 60s
     volumes:
       - database_data:/var/lib/mysql
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     environment:
@@ -26,9 +24,5 @@ services:
       - "8080:80"
     depends_on:
       - mysql
-###< doctrine/doctrine-bundle ###
-
 volumes:
-  ###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
