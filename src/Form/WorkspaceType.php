@@ -17,7 +17,8 @@ class WorkspaceType extends AbstractType
             ->add('name')
             ->add('owner', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'email',
+                'required' => true,
             ])
         ;
     }

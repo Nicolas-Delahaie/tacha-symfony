@@ -35,8 +35,8 @@ class TaskType extends AbstractType
             ])
             ->add('father', EntityType::class, [
                 'class' => Task::class,
-                'choice_label' => 'title',
-                'required' => false, // Rendre ce champ facultatif
+                'choice_label' => 'title', //Bad because it takes all the tasks and not only workspace related tasks 
+                'required' => false, 
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
@@ -47,7 +47,7 @@ class TaskType extends AbstractType
             ->add('workspace', EntityType::class, [
                 'class' => Workspace::class,
                 'choice_label' => function (Workspace $workspace) {
-                    return "Workspace from ".$workspace->getOwner()->getEmail();
+                    return $workspace->getOwner()->getEmail()." : ".$workspace->getName();
                 },
                 'required' => true,
             ])
