@@ -57,7 +57,7 @@ docker-compose -f compose.yaml -f compose.prod.yaml up --build
 ### Developpement
 Création du fichier .env (copie du example)
 Completion du fichier
-`docker-compose up -d`
+`docker-compose up -d` : Fusionne par défaut compose et compose.override.
 Permet de lancer la base de données avec PhpMyAdmin.
 `php bin/console doctrine:schema:create`
 `php bin/console server:start`
