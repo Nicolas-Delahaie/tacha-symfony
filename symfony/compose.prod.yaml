@@ -23,13 +23,13 @@ services:
   # Symfony apache project container
   www:
     build:
-      context: docker/php
+      context: ./../docker/php
       args:
         PHP_VERSION: ${PHP_VERSION}
     ports:
       - "8741:80"
     volumes:
-      - ./docker/php/vhosts:/etc/apache2/sites-enabled
+      - ./../docker/php/vhosts:/etc/apache2/sites-enabled
       - ./:/var/www
     restart: always
 
