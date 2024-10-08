@@ -52,7 +52,9 @@ J'aimerais avoir cet outils, façonné à mon image, et propre à mes besoins po
 
 ### Production
 
-docker-compose -f compose.yaml -f compose.prod.yaml up --build
+docker-compose --env-file .env.prod -f compose.yaml -f compose.prod.yaml up --build
+php bin/console cache:clear --env=prod --no-debug
+php bin/console cache:warmup --env=prod
 
 ### Developpement
 Création du fichier .env (copie du example)
