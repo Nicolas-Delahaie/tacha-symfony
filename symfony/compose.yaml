@@ -37,7 +37,7 @@ services:
     volumes:
       - .:/var/www
       - var-data:/var/www/var # Ignore var/
-      # - /var/www/vendor
+      - /var/www/vendor
       - ./vhosts:/etc/apache2/sites-enabled
     depends_on:
       - mysql
@@ -45,4 +45,4 @@ services:
 
 volumes:
   db-data:
-  var-data:
+  var-data: # In future, for monitoring 

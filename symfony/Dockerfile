@@ -38,7 +38,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions \
 
 COPY ./composer.json /var/www/
 
-RUN 
+RUN composer install --no-dev --optimize-autoloader
 
 # Dockerfile should be in the root of the project
 # WARNING : keeps a copy after building. Changes needs rebuilding with this copy 
