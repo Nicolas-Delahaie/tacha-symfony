@@ -35,8 +35,14 @@ services:
     ports:
       - 8000:80
     volumes:
+      - .:/var/www
+      - var-data:/var/www/var # Ignore var/
+      # - /var/www/vendor
       - ./vhosts:/etc/apache2/sites-enabled
-    restart: always
+    depends_on:
+      - mysql
+    # restart: always Relou pour les tests
 
 volumes:
   db-data:
+  var-data:

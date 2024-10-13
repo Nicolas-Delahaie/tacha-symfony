@@ -36,8 +36,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions \
     && install-php-extensions pdo_mysql mysqli gd opcache zip dom mbstring apcu \
     && a2enmod rewrite
 
+COPY ./composer.json /var/www/
+
+RUN 
+
 # Dockerfile should be in the root of the project
-COPY . /var/www 
+# WARNING : keeps a copy after building. Changes needs rebuilding with this copy 
+# COPY . /var/www
 # !!! TODO selectionner dossiers un à uns en prod
 # !!! TODO Installer les deps
 # !!! TODO ajouter le cli
@@ -51,4 +56,8 @@ COPY . /var/www
 RUN echo "ServerName ${HOST_NAME}" >> /etc/apache2/apache2.conf
 RUN echo "LogLevel ${LOG_LEVEL}" >> /etc/apache2/apache2.conf
 
+# Needed 
+RUN mkdir -p var && \
+    chown -R www-data:www-data var && \
+    chmod -R 775 var
 # !!! TODO Initialiser la base de données

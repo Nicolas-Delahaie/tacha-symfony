@@ -51,6 +51,7 @@ J'aimerais avoir cet outils, façonné à mon image, et propre à mes besoins po
 ## Utilisation
 
 Crer un fichier .env.local avec APP_SECRET notament
+Modifier APP_ENV en fonction de l'environnement souhaité avant d'executer le docker-compose.
 
 ### Production
 
