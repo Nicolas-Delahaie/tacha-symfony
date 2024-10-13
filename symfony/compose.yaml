@@ -1,8 +1,8 @@
 version: "0.0"
 services:
   mysql:
-    image: mysql:${SERVER_VERSION}
-    container_name: db-tacha
+    image: mysql:${MYSQL_VERSION}
+    container_name: db-${APP_ENV}
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
@@ -31,10 +31,11 @@ services:
       context: .
       args:
         PHP_VERSION: ${PHP_VERSION}
+        APP_ENV: ${APP_ENV}
     ports:
       - 8000:80
     volumes:
-      - ./../docker/php/vhosts:/etc/apache2/sites-enabled
+      - ./vhosts:/etc/apache2/sites-enabled
     restart: always
 
 volumes:

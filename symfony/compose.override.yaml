@@ -1,9 +1,12 @@
-# Doit avoir le cli
 name: tacha-symfony-dev
 services:
   www:
     volumes:
       - ./:/var/www
+    build:
+      args:
+        HOST_NAME: "localhost"
+        LOG_LEVEL: "notice"
 
   mailer:
     image: axllent/mailpit

@@ -2,31 +2,27 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-apache
 
+ARG APP_ENV
+ARG LOG_LEVEL
+ARG HOST_NAME
+
 WORKDIR /var/www
+# !!!TODO créer le fichier .env.php
 
-COPY . /var/www
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# # Copies the .env.prod file to environment to override the .env file
+# RUN export $(grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.${APP_ENV} | xargs)
+# RUN composer dump-env ${APP_ENV}
 
 RUN apt-get update \
     && apt-get install -qq -y --no-install-recommends \
-    cron \
-    vim \
     locales \
     coreutils \
     apt-utils \
     git \
-    libicu-dev \
-    g++ \
     libpng-dev \
-    libxml2-dev \
-    libzip-dev \
     libonig-dev \
-    libxslt-dev \
-    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
-    && locale-gen en_US.UTF-8 fr_FR.UTF-8 \
-    && docker-php-ext-configure intl \
+    && locale-gen fr_FR.UTF-8 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,7 +31,24 @@ COPY --from=composer:2.1 /usr/bin/composer /usr/local/bin/composer
 
 # Installer les extensions PHP via install-php-extensions
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions amqp pdo_mysql mysqli gd opcache intl zip calendar dom mbstring xsl apcu
+RUN chmod +x /usr/local/bin/install-php-extensions \
+    && sync \
+    && install-php-extensions pdo_mysql mysqli gd opcache zip dom mbstring apcu \
+    && a2enmod rewrite
 
-RUN a2enmod rewrite
+# Dockerfile should be in the root of the project
+COPY . /var/www 
+# !!! TODO selectionner dossiers un à uns en prod
+# !!! TODO Installer les deps
+# !!! TODO ajouter le cli
+# !!! TODO ajouter php bin/console server:log
+
+# Donner les permissions nécessaires au dossier var/ pour l'utilisateur www-data
+# RUN chown -R www-data:www-data /var/www
+# RUN chmod -R 775 /var/www
+
+# COPY ./apache2.conf etc/apache2/apache2.conf
+RUN echo "ServerName ${HOST_NAME}" >> /etc/apache2/apache2.conf
+RUN echo "LogLevel ${LOG_LEVEL}" >> /etc/apache2/apache2.conf
+
+# !!! TODO Initialiser la base de données

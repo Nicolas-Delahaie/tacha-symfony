@@ -50,6 +50,8 @@ J'aimerais avoir cet outils, façonné à mon image, et propre à mes besoins po
 
 ## Utilisation
 
+Crer un fichier .env.local avec APP_SECRET notament
+
 ### Production
 
 docker-compose --env-file .env.prod -f compose.yaml -f compose.prod.yaml up --build
@@ -57,6 +59,7 @@ php bin/console cache:clear --env=prod --no-debug
 php bin/console cache:warmup --env=prod
 
 ### Developpement
+
 Création du fichier .env (copie du example)
 Completion du fichier
 `docker-compose up -d` : Fusionne par défaut compose et compose.override.

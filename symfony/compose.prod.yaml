@@ -1,1 +1,12 @@
 name: tacha-symfony-prod
+services:
+  mysql:
+    environment:
+      LOG_LEVEL: "error"
+
+  www:
+    build:
+      context: .
+      args:
+        HOST_NAME: "localhost"
+        LOG_LEVEL: "error"
