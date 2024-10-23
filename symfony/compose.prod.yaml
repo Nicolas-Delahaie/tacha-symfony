@@ -6,7 +6,16 @@ services:
 
   www:
     build:
-      context: .
+      dockerfile: ./Dockerfile-prod
       args:
-        HOST_NAME: "localhost"
-        LOG_LEVEL: "error"
+        HOST_NAME: "localhost" # TODO supp
+        LOG_LEVEL: "error" # TODO supp
+        PHP_VERSION: ${PHP_VERSION}
+        APP_ENV: ${APP_ENV}
+    ports:
+      - 8000:80
+    volumes:
+      - ./vhosts:/etc/apache2/sites-enabled
+    depends_on:
+      - mysql
+    # restart: always Relou pour les tests

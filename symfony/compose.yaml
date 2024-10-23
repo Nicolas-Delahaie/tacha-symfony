@@ -26,19 +26,5 @@ services:
     depends_on:
       - mysql
 
-  www:
-    build:
-      context: .
-      args:
-        PHP_VERSION: ${PHP_VERSION}
-        APP_ENV: ${APP_ENV}
-    ports:
-      - 8000:80
-    volumes:
-      - ./vhosts:/etc/apache2/sites-enabled
-    depends_on:
-      - mysql
-    # restart: always Relou pour les tests
-
 volumes:
   db-data:

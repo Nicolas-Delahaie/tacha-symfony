@@ -1,17 +1,8 @@
 name: tacha-symfony-dev
 services:
-  www:
-    volumes:
-      - ./:/var/www
-      # - /var/www/vendor
-      # - var-data:/var/www/var # Ignore var/
-      # - /var/www/var/cache # Ignore cache
-      # - ./var/log:/var/www/var/log # Check si le fait de prendre log ne fait pas trop ramer
-    build:
-      args:
-        HOST_NAME: "localhost"
-        LOG_LEVEL: "notice"
-
+  mysql:
+    ports:
+      - 3306:3306
   mailer:
     image: axllent/mailpit
     ports:

@@ -1,7 +1,6 @@
 <?php
 
 use App\Kernel;
-use Symfony\Component\Dotenv\Dotenv;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
