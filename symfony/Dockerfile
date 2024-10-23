@@ -7,7 +7,6 @@ ARG LOG_LEVEL
 ARG HOST_NAME
 
 WORKDIR /var/www
-# !!!TODO créer le fichier .env.php
 
 # # Copies the .env.prod file to environment to override the .env file
 # RUN export $(grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.${APP_ENV} | xargs)
@@ -36,28 +35,22 @@ RUN chmod +x /usr/local/bin/install-php-extensions \
     && install-php-extensions pdo_mysql mysqli gd opcache zip dom mbstring apcu \
     && a2enmod rewrite
 
-COPY ./composer.json /var/www/
+RUN echo "ServerName ${HOST_NAME}" >> /etc/apache2/apache2.conf
+RUN echo "LogLevel ${LOG_LEVEL}" >> /etc/apache2/apache2.conf
+
+RUN chown -R www-data:www-data /var/www && \
+    chmod -R 775 /var/www
+
+COPY --chown=www-data:www-data . /var/www 
+# Essayer de déplacer le copy après le user pour retirer le chown
+
+USER www-data
 
 RUN composer install --no-dev --optimize-autoloader
 
 # Dockerfile should be in the root of the project
-# WARNING : keeps a copy after building. Changes needs rebuilding with this copy 
-# COPY . /var/www
-# !!! TODO selectionner dossiers un à uns en prod
-# !!! TODO Installer les deps
-# !!! TODO ajouter le cli
 # !!! TODO ajouter php bin/console server:log
 
-# Donner les permissions nécessaires au dossier var/ pour l'utilisateur www-data
-# RUN chown -R www-data:www-data /var/www
-# RUN chmod -R 775 /var/www
-
-# COPY ./apache2.conf etc/apache2/apache2.conf
-RUN echo "ServerName ${HOST_NAME}" >> /etc/apache2/apache2.conf
-RUN echo "LogLevel ${LOG_LEVEL}" >> /etc/apache2/apache2.conf
-
-# Needed 
-RUN mkdir -p var && \
-    chown -R www-data:www-data var && \
-    chmod -R 775 var
-# !!! TODO Initialiser la base de données
+RUN php bin/console cache:clear --env=prod --no-debug  
+RUN php bin/console cache:warmup --env=prod
+RUN composer dump-env prod

@@ -55,9 +55,8 @@ Modifier APP_ENV en fonction de l'environnement souhaité avant d'executer le do
 
 ### Production
 
-docker-compose --env-file .env.prod -f compose.yaml -f compose.prod.yaml up --build
-php bin/console cache:clear --env=prod --no-debug
-php bin/console cache:warmup --env=prod
+docker-compose -f compose.yaml -f compose.prod.yaml up --build
+php bin/console doctrine:schema:update
 
 ### Developpement
 
@@ -67,3 +66,7 @@ Completion du fichier
 Permet de lancer la base de données avec PhpMyAdmin.
 `php bin/console doctrine:schema:create`
 `php bin/console server:start`
+
+# Idées
+Vue tableau vs vue detaillée tache (avec suivi hierarchique)
+Vision de la charge de travail reellement effectuée

@@ -3,6 +3,10 @@ services:
   www:
     volumes:
       - ./:/var/www
+      # - /var/www/vendor
+      # - var-data:/var/www/var # Ignore var/
+      # - /var/www/var/cache # Ignore cache
+      # - ./var/log:/var/www/var/log # Check si le fait de prendre log ne fait pas trop ramer
     build:
       args:
         HOST_NAME: "localhost"
@@ -16,3 +20,6 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+volumes:
+  var-data: # In future, for monitoring
