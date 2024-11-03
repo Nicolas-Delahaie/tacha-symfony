@@ -8,10 +8,7 @@ services:
     build:
       dockerfile: ./Dockerfile-prod
       args:
-        HOST_NAME: "localhost" # TODO supp
-        LOG_LEVEL: "error" # TODO supp
         PHP_VERSION: ${PHP_VERSION}
-        APP_ENV: ${APP_ENV}
     ports:
       - 8000:80
     volumes:

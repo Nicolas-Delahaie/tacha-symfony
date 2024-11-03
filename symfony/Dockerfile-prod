@@ -2,15 +2,7 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-apache
 
-ARG APP_ENV
-ARG LOG_LEVEL
-ARG HOST_NAME
-
 WORKDIR /var/www
-
-# # Copies the .env.prod file to environment to override the .env file
-# RUN export $(grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.${APP_ENV} | xargs)
-# RUN composer dump-env ${APP_ENV}
 
 RUN apt-get update \
     && apt-get install -qq -y --no-install-recommends \
@@ -35,8 +27,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions \
     && install-php-extensions pdo_mysql mysqli gd opcache zip dom mbstring apcu \
     && a2enmod rewrite
 
-RUN echo "ServerName ${HOST_NAME}" >> /etc/apache2/apache2.conf
-RUN echo "LogLevel ${LOG_LEVEL}" >> /etc/apache2/apache2.conf
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN echo "LogLevel error" >> /etc/apache2/apache2.conf
 
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 775 /var/www
@@ -54,3 +46,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN php bin/console cache:clear --env=prod --no-debug  
 RUN php bin/console cache:warmup --env=prod
 RUN composer dump-env prod
+
+
+# # Copies the .env.prod file to environment to override the .env file
+# RUN export $(grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env.prod | xargs)
