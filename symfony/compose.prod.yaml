@@ -11,8 +11,6 @@ services:
         PHP_VERSION: "8.3.11"
     ports:
       - 8000:80
-    volumes:
-      - ./vhosts:/etc/apache2/sites-enabled
     depends_on:
       - mysql
     # restart: always Relou pour les tests

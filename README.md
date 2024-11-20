@@ -63,7 +63,7 @@ Tout le projet est inclus dans le container docker mais les fichiers ne sont pas
 
 ### Developpement
 
-! PHP et le CLI de Symfony doivent être installés en local.
+! PHP, Composer et le CLI de Symfony doivent être installés en local.
 
 -   Dans le fichier `.env` mettre APP_ENV=dev
 -   `docker-compose up -d` : créé les containers (utilise compose et compose.override)
