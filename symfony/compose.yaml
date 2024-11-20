@@ -1,8 +1,6 @@
-version: "0.0"
 services:
   mysql:
     image: mysql:${MYSQL_VERSION}
-    container_name: db-${APP_ENV}
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME}
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}

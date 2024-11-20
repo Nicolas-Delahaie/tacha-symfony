@@ -22,11 +22,11 @@ L'idée est de sauvegarder des tâches non pas sous forme de liste mais sous for
 
 Chaque attribut peut aller de 0 à 100. On retrouve notament :
 
-- la priorité : s'il faut vite exécuter la tache
-- la désirabilité : si on c'est une tâche agréable ou désagréable
-- la concentration : s'il demande beaucoup de réflexion
-- charge de travail
-- deadline : définit la priorité.
+-   la priorité : s'il faut vite exécuter la tache
+-   la désirabilité : si on c'est une tâche agréable ou désagréable
+-   la concentration : s'il demande beaucoup de réflexion
+-   charge de travail
+-   deadline : définit la priorité.
 
 De cette manière, on peut en un simple coup d'oeil visualiser les tâches sur un tableau sur lequel on sélectionne les attributs en x et en y. Par exemple : priorité et désirabilité pour rapidement voir ce qui est ennuyeux à faire mais prioritaire. Autre exemple : désirabilité et charge de travail pour sélectionner une tâche rapide à faire mais ennuyeuse si on n'a pas beaucoup de temps.
 
@@ -50,23 +50,22 @@ J'aimerais avoir cet outils, façonné à mon image, et propre à mes besoins po
 
 ## Utilisation
 
-Crer un fichier .env.local avec APP_SECRET notament
-Modifier APP_ENV en fonction de l'environnement souhaité avant d'executer le docker-compose.
+Aller dans le dossier `symfony/`.
+Creer un fichier `.env.local` avec APP_SECRET.
 
 ### Production
 
-docker-compose -f compose.yaml -f compose.prod.yaml up --build
-php bin/console doctrine:schema:update
+Tout le projet est inclus dans le container docker mais les fichiers ne sont pas mis à jour. Un build est obligatoire pour les remettre à jour.
+
+-   Dans le fichier `.env` mettre APP_ENV=prod
+-   `docker-compose -f compose.yaml -f compose.prod.yaml up -d --build` : créé les containers (--build pour recopier les nouveaux fichiers)
+-   `php bin/console doctrine:schema:update` : créé la structure de la db si besoins
 
 ### Developpement
 
-Création du fichier .env (copie du example)
-Completion du fichier
-`docker-compose up -d` : Fusionne par défaut compose et compose.override.
-Permet de lancer la base de données avec PhpMyAdmin.
-`php bin/console doctrine:schema:create`
-`php bin/console server:start`
+! PHP et le CLI de Symfony doivent être installés en local.
 
-# Idées
-Vue tableau vs vue detaillée tache (avec suivi hierarchique)
-Vision de la charge de travail reellement effectuée
+-   Dans le fichier `.env` mettre APP_ENV=dev
+-   `docker-compose up -d` : créé les containers (utilise compose et compose.override)
+-   `php bin/console doctrine:schema:update` : créé la structure de la db si besoins
+-   `symfony server:start` : lancer le serveur en local

@@ -33,15 +33,13 @@ RUN echo "LogLevel error" >> /etc/apache2/apache2.conf
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 775 /var/www
 
+# Dockerfile should be in the root of the project
 COPY --chown=www-data:www-data . /var/www 
 # Essayer de déplacer le copy après le user pour retirer le chown
 
 USER www-data
 
 RUN composer install --no-dev --optimize-autoloader
-
-# Dockerfile should be in the root of the project
-# !!! TODO ajouter php bin/console server:log
 
 RUN php bin/console cache:clear --env=prod --no-debug  
 RUN php bin/console cache:warmup --env=prod
